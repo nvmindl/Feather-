@@ -1,5 +1,23 @@
 {
   "name": "Nuvio Feather Repo",
   "identifier": "com.nvmindl.feather",
-  "apps": []
+  "apps": [
+    {
+      "name": "Nuvio",
+      "bundleIdentifier": "com.nuvio.mobile",
+      "developerName": "luqmanfadlli",
+      "subtitle": "iOS",
+      "localizedDescription": "Auto-updated from luqmanfadlli/NuvioMobile-iOS releases.",
+      "iconURL": "",
+      "versions": [
+        {
+          "version": "0.2.3-Enhanced",
+          "date": "2026-06-04T04:49:56Z",
+          "downloadURL": "https://github.com/luqmanfadlli/NuvioMobile-iOS/releases/download/0.2.3-Enhanced/Nuvio-v0.2.3-Enhanced.ipa",
+          "size": 37988256,
+          "minOSVersion": "15.0"
+        }
+      ]
+    }
+  ]
 }
