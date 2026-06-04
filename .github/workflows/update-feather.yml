@@ -37,7 +37,11 @@ jobs:
             --argjson size "${SIZE:-0}" \
             '{
               name: "Nuvio Feather Repo",
-              identifier: "com.nvmindl.feather",
+              subtitle: "Auto-updated Nuvio source",
+              description: "Auto-updated from luqmanfadlli/NuvioMobile-iOS releases.",
+              iconURL: "https://raw.githubusercontent.com/nvmindl/Feather-/main/icon.png",
+              sourceURL: "https://raw.githubusercontent.com/nvmindl/Feather-/main/feather.json",
+              website: "https://github.com/luqmanfadlli/NuvioMobile-iOS",
               apps: [
                 {
                   name: "Nuvio",
@@ -45,18 +49,24 @@ jobs:
                   developerName: "luqmanfadlli",
                   subtitle: "iOS",
                   localizedDescription: "Auto-updated from luqmanfadlli/NuvioMobile-iOS releases.",
-                  iconURL: "",
+                  iconURL: "https://raw.githubusercontent.com/nvmindl/Feather-/main/icon.png",
                   versions: [
                     {
                       version: $tag,
                       date: $date,
+                      localizedDescription: "Latest GitHub release.",
                       downloadURL: $url,
                       size: $size,
                       minOSVersion: "15.0"
                     }
-                  ]
+                  ],
+                  appPermissions: {
+                    entitlements: [],
+                    privacy: {}
+                  }
                 }
-              ]
+              ],
+              news: []
             }' > feather.json
 
       - name: Commit updated feather.json
