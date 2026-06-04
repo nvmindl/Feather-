@@ -16,31 +16,59 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Get latest Nuvio release
+      - name: Build feather.json from all releases
         run: |
-          curl -s https://api.github.com/repos/luqmanfadlli/NuvioMobile-iOS/releases/latest > latest.json
+          curl -s https://api.github.com/repos/luqmanfadlli/NuvioMobile-iOS/releases > releases.json
 
-          TAG=$(jq -r '.tag_name // empty' latest.json)
-          DATE=$(jq -r '.published_at // empty' latest.json)
-          IPA_URL=$(jq -r '.assets[]? | select(.name | ascii_downcase | endswith(".ipa")) | .browser_download_url' latest.json | head -n 1)
-          SIZE=$(jq -r '.assets[]? | select(.name | ascii_downcase | endswith(".ipa")) | .size' latest.json | head -n 1)
+          COUNT=$(jq 'length' releases.json)
+          if [ "$COUNT" -eq 0 ]; then
+            echo "No releases found."
+            exit 1
+          fi
 
-          if [ -z "$TAG" ] || [ -z "$IPA_URL" ]; then
-            echo "No release or IPA asset found."
+          VERSIONS=$(jq '
+            [
+              .[]
+              | select(.draft == false)
+              | {
+                  tag: .tag_name,
+                  date: .published_at,
+                  ipa: (
+                    .assets[]
+                    | select(.name | ascii_downcase | endswith(".ipa"))
+                    | {
+                        url: .browser_download_url,
+                        size: .size
+                      }
+                  )
+                }
+              | select(.ipa.url != null)
+              | {
+                  version: .tag,
+                  date: .date,
+                  localizedDescription: "GitHub release.",
+                  downloadURL: .ipa.url,
+                  size: .ipa.size,
+                  minOSVersion: "15.0"
+                }
+            ]
+          ' releases.json)
+
+          VERSION_COUNT=$(echo "$VERSIONS" | jq 'length')
+          if [ "$VERSION_COUNT" -eq 0 ]; then
+            echo "No IPA assets found in releases."
             exit 1
           fi
 
           jq -n \
-            --arg tag "$TAG" \
-            --arg date "$DATE" \
-            --arg url "$IPA_URL" \
-            --argjson size "${SIZE:-0}" \
+            --argjson versions "$VERSIONS" \
             '{
               name: "Nuvio Feather Repo",
+              identifier: "com.nvmindl.feather",
+              sourceURL: "https://github.com/nvmindl/Feather-/raw/refs/heads/main/feather.json",
               subtitle: "Auto-updated Nuvio source",
               description: "Auto-updated from luqmanfadlli/NuvioMobile-iOS releases.",
-              iconURL: "https://raw.githubusercontent.com/nvmindl/Feather-/main/icon.png",
-              sourceURL: "https://raw.githubusercontent.com/nvmindl/Feather-/main/feather.json",
+              iconURL: "https://github.com/nvmindl/Feather-/raw/refs/heads/main/icon.png",
               website: "https://github.com/luqmanfadlli/NuvioMobile-iOS",
               apps: [
                 {
@@ -49,20 +77,11 @@ jobs:
                   developerName: "luqmanfadlli",
                   subtitle: "iOS",
                   localizedDescription: "Auto-updated from luqmanfadlli/NuvioMobile-iOS releases.",
-                  iconURL: "https://raw.githubusercontent.com/nvmindl/Feather-/main/icon.png",
-                  versions: [
-                    {
-                      version: $tag,
-                      date: $date,
-                      localizedDescription: "Latest GitHub release.",
-                      downloadURL: $url,
-                      size: $size,
-                      minOSVersion: "15.0"
-                    }
-                  ],
+                  iconURL: "https://github.com/nvmindl/Feather-/raw/refs/heads/main/icon.png",
+                  versions: $versions,
                   appPermissions: {
                     entitlements: [],
-                    privacy: {}
+                    privacy: []
                   }
                 }
               ],
@@ -74,5 +93,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add feather.json
-          git diff --cached --quiet || git commit -m "Update feather.json from latest release"
+          git diff --cached --quiet || git commit -m "Update feather.json from all releases"
           git push
