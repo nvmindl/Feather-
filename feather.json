@@ -19,6 +19,14 @@
           "version": "0.2.9",
           "date": "2026-06-19T15:36:35Z",
           "localizedDescription": "GitHub release.",
+          "downloadURL": "https://github.com/luqmanfadlli/NuvioMobile-iOS/releases/download/0.2.9/Nuvio-v0.2.9-Enhanced.ipa",
+          "size": 38532842,
+          "minOSVersion": "15.0"
+        },
+        {
+          "version": "0.2.9",
+          "date": "2026-06-19T15:36:35Z",
+          "localizedDescription": "GitHub release.",
           "downloadURL": "https://github.com/luqmanfadlli/NuvioMobile-iOS/releases/download/0.2.9/Nuvio-v0.2.9-Full.ipa",
           "size": 38475418,
           "minOSVersion": "15.0"
