@@ -16,6 +16,22 @@
       "iconURL": "https://github.com/nvmindl/Feather-/raw/refs/heads/main/icon.png",
       "versions": [
         {
+          "version": "0.4.5",
+          "date": "2026-08-13T06:10:17Z",
+          "localizedDescription": "GitHub release.",
+          "downloadURL": "https://github.com/luqmanfadlli/NuvioMobile-iOS/releases/download/0.4.5/Nuvio-v0.4.5-Enhanced.ipa",
+          "size": 49333635,
+          "minOSVersion": "15.0"
+        },
+        {
+          "version": "0.4.5",
+          "date": "2026-08-13T06:10:17Z",
+          "localizedDescription": "GitHub release.",
+          "downloadURL": "https://github.com/luqmanfadlli/NuvioMobile-iOS/releases/download/0.4.5/Nuvio-v0.4.5-Full.ipa",
+          "size": 48321307,
+          "minOSVersion": "15.0"
+        },
+        {
           "version": "0.4.3",
           "date": "2026-08-10T05:39:18Z",
           "localizedDescription": "GitHub release.",
@@ -461,14 +477,6 @@
           "localizedDescription": "GitHub release.",
           "downloadURL": "https://github.com/luqmanfadlli/NuvioMobile-iOS/releases/download/0.2.0-Enhanced/Nuvio-v0.2.0-Enhanced.ipa",
           "size": 37476040,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "0.1.25-Enhanced",
-          "date": "2026-05-27T09:46:48Z",
-          "localizedDescription": "GitHub release.",
-          "downloadURL": "https://github.com/luqmanfadlli/NuvioMobile-iOS/releases/download/0.1.25-Enhanced/Nuvio-v0.1.25-Enhanced.ipa",
-          "size": 36978873,
           "minOSVersion": "15.0"
         }
       ],
